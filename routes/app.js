@@ -18,6 +18,7 @@ function bulkAPI(req, res, dbs) {
           1: Object.is(docs[i].upload, undefined) ? null : docs[i].upload,
           2: Object.is(docs[i].ping, undefined) ? null : docs[i].ping,
           3: Object.is(docs[i].jitter, undefined) ? null : docs[i].jitter,
+          4: Object.is(docs[i].loss, undefined) ? null : docs[i].loss,
         };
         for (let j = 0; j < Object.keys(struct).length; j += 1) {
           if (struct[j] !== null) {
@@ -62,6 +63,9 @@ async function avgAPI(req, res, dbs) {
       },
       avgj: {
         $avg: '$jitter',
+      },
+      avgl: {
+        $avg: '$loss',
       },
     },
   }];

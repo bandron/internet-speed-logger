@@ -128,6 +128,13 @@ body {
   stroke: #ff886a;
 }
 
+/* Loss Styles */
+
+.vis-graph-group4 {
+  fill: #c42300;
+  stroke: #c42300;
+}
+
 
 /* Stats */
 

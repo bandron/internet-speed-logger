@@ -2,9 +2,6 @@ version: "3.7"
 services:
   speedlogger-web:
     image: internet-speed-logger
-    build:
-      context: ./
-      dockerfile: ./Dockerfile
     ports:
       - "3000:3000"
     depends_on:
@@ -14,9 +11,6 @@ services:
       - ./config:/data/config
   speedlogger-runner:
     image: internet-speed-logger
-    build:
-      context: ./
-      dockerfile: ./Dockerfile
     depends_on:
       - speedlogger-web
     restart: always

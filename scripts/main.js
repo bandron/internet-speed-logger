@@ -71,6 +71,19 @@ groups.add({
   },
 });
 
+groups.add({
+  id: 4,
+  content: 'Loss - Percentage',
+  options: {
+    drawPoints: {
+      style: 'circle', // square, circle
+    },
+    shaded: {
+      orientation: 'bottom', // top, bottom
+    },
+  },
+});
+
 function convertTime(val) {
   if (typeof val !== 'number') {
     const d = Date.parse(val);
@@ -95,6 +108,7 @@ function rangeChanged(event) {
       up: '-',
       ping: '-',
       jitter: '-',
+      loss: '-',
     };
     if (data.length > 0) {
       legendText = {
@@ -102,12 +116,14 @@ function rangeChanged(event) {
         up: `Avg. ${normalizeAvg(data[0].avgu)}`,
         ping: `Avg. ${normalizeAvg(data[0].avgp)}`,
         jitter: `Avg. ${normalizeAvg(data[0].avgj)}`,
+        loss: `Avg. ${normalizeAvg(data[0].avgl)}`,
       };
     }
     $('.vis-legend-stats #avg-download').text(legendText.down);
     $('.vis-legend-stats #avg-upload').text(legendText.up);
     $('.vis-legend-stats #avg-ping').text(legendText.ping);
     $('.vis-legend-stats #avg-jitter').text(legendText.jitter);
+    $('.vis-legend-stats #avg-loss').text(legendText.loss);
   });
   debounceGlobal = false;
   setTimeout(() => {
@@ -124,7 +140,7 @@ $.getJSON('/api/', (data) => {
   const dataset = new vis.DataSet(data);
   // eslint-disable-next-line no-undef
   const Graph2d = new vis.Graph2d(container, dataset, groups, options);
-  $('.vis-legend').append('<div class="vis-legend-text vis-legend-stats"><span id="avg-download"></span><span id="avg-upload"></span><span id="avg-ping"></span><span id="avg-jitter"></span></div>');
+  $('.vis-legend').append('<div class="vis-legend-text vis-legend-stats"><span id="avg-download"></span><span id="avg-upload"></span><span id="avg-ping"></span><span id="avg-jitter"></span><span id="avg-loss"></span></div>');
   Graph2d.on('rangechanged', rangeChanged);
   rangeChanged(options);
   let loadTime = new Date().getTime();

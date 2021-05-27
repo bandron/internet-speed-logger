@@ -7,7 +7,7 @@ const dbInit = require('./db');
 const cmd = config.get('speedtest.commandString');
 
 // Timing related constants
-const minimumIntervalS = 1800;
+const minimumIntervalS = 60;
 const intervalS = Math.max(config.get('speedtest.intervalSec'), minimumIntervalS);
 const intervalMS = intervalS * 1000;
 
@@ -25,8 +25,9 @@ function insertData(result) {
     const { jitter } = result.ping;
     const download = result.download.bandwidth * byteToMbit;
     const upload = result.upload.bandwidth * byteToMbit;
+    const loss = result.packetLoss;
     const speedtestResult = {
-      date: new Date(timestamp), ping, download, upload, jitter,
+      date: new Date(timestamp), ping, download, upload, jitter, loss,
     };
     dbs.insertOne(speedtestResult, (err) => {
       if (err) {
